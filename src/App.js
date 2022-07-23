@@ -1,24 +1,21 @@
-import { eventWrapper } from "@testing-library/user-event/dist/utils";
-import React from "react";
+import React,{useState,useEffect} from "react";
 
 function App(){
-    const [a, setA] = useState({value:''})
+const [count, setCount] = useState(0)
+useEffect(()=>{console.log('effect0')})
+useEffect(()=>{console.log('effect1')})
+useEffect(()=>{console.log('effect02')},[count])
     return(
-        <form onSubmit = {handleSubmit}>
-            <p>
-                <label>Name: </label>
-                <input type="text" value={a.value} onChange={handleChange}></input>
-            </p>
-            <p><input type="submit" value="Submit" /></p>
-        </form>
+        <div>
+            <h1> effect basics</h1>
+            <p> count change : {count}</p>
+            <p><button onClick ={click}>click</button></p>
+        </div>
     )
-    function handleChange(e){
-        console.log(e.target.value)
-        setA({value: e.target.value})
-    }
-    function handleSubmit(e){
-        e.preventDefault();
-        alert('value: '+ a.value)
-    }
-    }
+function click(){
+    setCount(count+1)
+}
+
+}
+
 export default App
