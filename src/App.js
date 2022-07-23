@@ -1,20 +1,26 @@
 import React,{useState,useEffect} from "react";
 
 function App(){
-const [count, setCount] = useState(0)
-useEffect(()=>{console.log('effect0')})
-useEffect(()=>{console.log('effect1')})
-useEffect(()=>{console.log('effect02')},[count])
+    const [loading,setLoading] = useState(true)
+    const [users, setUsers] = useState([])
+    useEffect(()=>{
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then((item) => item.json())
+        .then((users) => {setUsers(users)
+            setLoading(false)}
+            )
+
+        },[])
+    if(loading){
+        console.log('loading')
+    }
     return(
-        <div>
-            <h1> effect basics</h1>
-            <p> count change : {count}</p>
-            <p><button onClick ={click}>click</button></p>
-        </div>
+        <ul>
+            {users.map((item)=>(
+                <li key={item.id}>{item.name}</li>
+            ))}
+        </ul>
     )
-function click(){
-    setCount(count+1)
-}
 
 }
 
